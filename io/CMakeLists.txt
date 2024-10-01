@@ -41,6 +41,9 @@ traccc_add_library( traccc_io io TYPE SHARED
   "include/traccc/io/csv/make_measurement_hit_id_reader.hpp"
   "include/traccc/io/csv/make_particle_reader.hpp"
   "include/traccc/io/csv/make_surface_reader.hpp"
+  #My files
+  "include/traccc/io/mywrite.hpp"
+  "src/mywrite.cpp"
   # Implementation
   "src/data_format.cpp"
   "src/event_map2.cpp"

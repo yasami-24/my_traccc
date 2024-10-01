@@ -4,9 +4,11 @@
 #
 # Mozilla Public License Version 2.0
 
+
 traccc_add_executable( seeding_example "seeding_example.cpp"
    LINK_LIBRARIES vecmem::core traccc::core traccc::io
    traccc::performance traccc::options detray::utils detray::io)
+
 
 traccc_add_executable( seq_example "seq_example.cpp"
    LINK_LIBRARIES vecmem::core traccc::core traccc::io
@@ -25,6 +27,12 @@ traccc_add_executable( ccl_example "ccl_example.cpp"
 
 traccc_add_executable( tbb_task_example "tbb_task_example.cpp"
    LINK_LIBRARIES TBB::tbb )
+
+# asami tutorial step6
+   traccc_add_executable( my_seeding_example "my_seeding_example.cpp"
+   LINK_LIBRARIES vecmem::core traccc::core traccc::io
+   traccc::performance traccc::options detray::utils detray::io)
+
 
 #
 # Set up the "throughput applications".

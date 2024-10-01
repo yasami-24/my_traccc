@@ -25,3 +25,10 @@ traccc_add_executable(simulate_wire_chamber "simulate_wire_chamber.cpp"
     LINK_LIBRARIES vecmem::core traccc::io traccc::core
     traccc::options traccc::simulation detray::core detray::utils covfie::core 
     Boost::filesystem)
+
+# 2024/07/17 asami 
+traccc_add_executable(pu_simulate "pu_simulate.cpp"
+    LINK_LIBRARIES vecmem::core traccc::io traccc::core
+    traccc::options traccc::simulation detray::core detray::utils covfie::core 
+    Boost::filesystem)
+# up to here
