@@ -63,10 +63,6 @@
 #include <fstream>
 // up to here
 
-// asami 240911
-#include <regex>
-// up to here
-
 // 2024/08/29 asami
 // My include(s).
 #include "traccc/io/mywrite.hpp"
@@ -146,7 +142,8 @@ int seq_run(const traccc::opts::track_seeding& seeding_opts,
     std::ofstream file_track_candidate;
 
     // up to here
-    
+
+
     /*****************************
      * Build a geometry
      *****************************/
@@ -498,49 +495,49 @@ int seq_run(const traccc::opts::track_seeding& seeding_opts,
         traccc::io::mywrite(event,output_opts.directory+"cuda/",vecmem::get_data(seeds_cuda));
         // up to here
 
-        if (performance_opts.run) {
-            traccc::event_map2 evt_map(event, input_opts.directory,
-                                       input_opts.directory,
-                                       input_opts.directory);
-            sd_performance_writer.write(
-                vecmem::get_data(seeds_cuda),
-                vecmem::get_data(sp_reader_output.spacepoints), evt_map);
-
-            find_performance_writer.write(
-                traccc::get_data(track_candidates_cuda), evt_map);                
-
-            for (unsigned int i = 0; i < track_states_cuda.size(); i++) {         
-                const auto& trk_states_per_track =
-                    track_states_cuda.at(i).items;                                
-
-                const auto& fit_res = track_states_cuda[i].header;                
-
-                fit_performance_writer.write(trk_states_per_track, fit_res,
-                                             host_det, evt_map);
-            }
-        }
-
         // if (performance_opts.run) {
         //     traccc::event_map2 evt_map(event, input_opts.directory,
         //                                input_opts.directory,
         //                                input_opts.directory);
         //     sd_performance_writer.write(
-        //         vecmem::get_data(seeds),                                        // 2024/08/26 asami "seeds_cuda"->"seeds"
+        //         vecmem::get_data(seeds_cuda),
         //         vecmem::get_data(sp_reader_output.spacepoints), evt_map);
 
         //     find_performance_writer.write(
-        //         traccc::get_data(track_candidates), evt_map);                 // 2024/08/26 asami "track_candidates_cuda"->"track_candidates"
+        //         traccc::get_data(track_candidates_cuda), evt_map);                
 
-        //     for (unsigned int i = 0; i < track_states.size(); i++) {          // 2024/08/26 asami "track_states_cuda.size()"->"track_states.size()"
+        //     for (unsigned int i = 0; i < track_states_cuda.size(); i++) {         
         //         const auto& trk_states_per_track =
-        //             track_states.at(i).items;                                 // 2024/08/26 asami "track_states_cuda.at(i).items"->"track_states.at(i).items;"
+        //             track_states_cuda.at(i).items;                                
 
-        //         const auto& fit_res = track_states[i].header;                 // 2024/08/26 asami "track_states_cuda[i].header"->"track_states[i].header"
+        //         const auto& fit_res = track_states_cuda[i].header;                
 
         //         fit_performance_writer.write(trk_states_per_track, fit_res,
         //                                      host_det, evt_map);
         //     }
         // }
+
+        if (performance_opts.run) {
+            traccc::event_map2 evt_map(event, input_opts.directory,
+                                       input_opts.directory,
+                                       input_opts.directory);
+            sd_performance_writer.write(
+                vecmem::get_data(seeds),                                        // 2024/08/26 asami "seeds_cuda"->"seeds"
+                vecmem::get_data(sp_reader_output.spacepoints), evt_map);
+
+            find_performance_writer.write(
+                traccc::get_data(track_candidates), evt_map);                 // 2024/08/26 asami "track_candidates_cuda"->"track_candidates"
+
+            for (unsigned int i = 0; i < track_states.size(); i++) {          // 2024/08/26 asami "track_states_cuda.size()"->"track_states.size()"
+                const auto& trk_states_per_track =
+                    track_states.at(i).items;                                 // 2024/08/26 asami "track_states_cuda.at(i).items"->"track_states.at(i).items;"
+
+                const auto& fit_res = track_states[i].header;                 // 2024/08/26 asami "track_states_cuda[i].header"->"track_states[i].header"
+
+                fit_performance_writer.write(trk_states_per_track, fit_res,
+                                             host_det, evt_map);
+            }
+        }
     }
 
     if (performance_opts.run) {
@@ -565,62 +562,6 @@ int seq_run(const traccc::opts::track_seeding& seeding_opts,
     std::cout << "- created (cuda) " << n_fitted_tracks_cuda << " fitted tracks"
               << std::endl;
     std::cout << "==>Elapsed times...\n" << elapsedTimes << std::endl;
-
-
-    // asami 240911
-
-    // create a file to store elapsed times temporarily
-    std::string filename_tempo = "tempo_time.txt";
-    std::ofstream file_tempo_time;
-
-    file_tempo_time.open(filename_tempo, std::ios::app);
-    if (file_tempo_time.is_open()) {
-    
-        file_tempo_time << elapsedTimes << std::endl;
-
-        file_tempo_time.close();
-    
-    } else {
-    
-        std::cerr << "Unable to open file: " << std::endl;
-    
-    }
-
-    // input from the temporary file and output only values to processing_time.txt
-    std::string filename_time = "processing_time.txt";
-
-    std::ifstream inputFile(filename_tempo);
-
-    if (!inputFile.is_open()) {
-        std::cerr << "unable to open input file" << std::endl;
-        return 1;
-    }
-
-    std::ofstream outputFile("processing_time.txt");
-
-    if (!outputFile.is_open()) {
-        std::cerr << "unable to open processing_time.txt" << std::endl;
-        return 1;
-    }
-
-    std::string line;
-    std::regex numberRegex(R"(\d+)");
-    std::smatch match;
-
-    while (std::getline(inputFile, line)) {
-
-        while (std::regex_search(line, match, numberRegex)) {
-
-            outputFile << match.str() << std::endl;
-
-            line = match.suffix().str();
-        }
-    }
-
-    inputFile.close();
-    outputFile.close();
-
-    // up to here
 
     return 0;
 }
