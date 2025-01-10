@@ -28,13 +28,13 @@ traccc_add_executable( ccl_example "ccl_example.cpp"
 traccc_add_executable( tbb_task_example "tbb_task_example.cpp"
    LINK_LIBRARIES TBB::tbb )
 
-# asami tutorial step6
-   traccc_add_executable( my_seeding_example "my_seeding_example.cpp"
-   LINK_LIBRARIES vecmem::core traccc::core traccc::io
-   traccc::performance traccc::options detray::utils detray::io)
+# # asami tutorial step6
+#    traccc_add_executable( my_seeding_example "my_seeding_example.cpp"
+#    LINK_LIBRARIES vecmem::core traccc::core traccc::io
+#    traccc::performance traccc::options detray::utils detray::io)
 
 
-#
+# #
 # Set up the "throughput applications".
 #
 add_library( traccc_examples_cpu STATIC

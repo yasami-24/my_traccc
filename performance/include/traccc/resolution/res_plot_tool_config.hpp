@@ -32,15 +32,15 @@ struct res_plot_tool_config {
         {"residual_phi",
          plot_helpers::binning("r_{#phi} [rad]", 100, -0.01f, 0.01f)},
         {"residual_theta",
-         plot_helpers::binning("r_{#theta} [rad]", 100, -0.01f, 0.01f)},
+         plot_helpers::binning("r_{#theta} [rad]", 1000, -0.01f, 0.01f)}, // 2024/12/12 asami  100->1000
         {"residual_qop",
-         plot_helpers::binning("r_{q/p} [c/GeV]", 100, -1.f, 1.f)},
+         plot_helpers::binning("r_{q/p} [c/GeV]", 1000, -1.f, 1.f)}, // 2024/12/12 asami  100->1000
         {"residual_t",
          plot_helpers::binning("r_{t} [s]", 100, -1000.f, 1000.f)},
         {"residual_qopT",
-         plot_helpers::binning("r_{q/p_{T}} [c/GeV]", 100, -1.f, 1.f)},
+         plot_helpers::binning("r_{q/p_{T}} [c/GeV]", 1000, -1.f, 1.f)}, // 2024/12/12 asami  100->1000
         {"residual_qopz",
-         plot_helpers::binning("r_{q/p_{z}} [c/GeV]", 100, -1.f, 1.f)},
+         plot_helpers::binning("r_{q/p_{z}} [c/GeV]", 1000, -1.f, 1.f)}, // 2024/12/12 asami  100->1000
         {"resolution_d0",
          plot_helpers::binning("#sigma_{d0} [mm]", 100, 0.f, 0.5f)},
         {"resolution_z0",
@@ -50,13 +50,13 @@ struct res_plot_tool_config {
         {"resolution_theta",
          plot_helpers::binning("#sigma_{#theta} [rad]", 100, 0.f, 0.01f)},
         {"resolution_qop",
-         plot_helpers::binning("#sigma_{q/p} [c/GeV]", 100, 0.f, 0.1f)},
+         plot_helpers::binning("#sigma_{q/p} [c/GeV]", 1000, 0.f, 0.1f)}, // 2024/12/12 asami  100->1000
         {"resolution_t",
          plot_helpers::binning("#sigma_{t} [s]", 100, -1000.f, 1000.f)},
         {"resolution_qopT",
-         plot_helpers::binning("#sigma_{q/p_{T}} [c/GeV]", 100, 0.f, 0.1f)},
+         plot_helpers::binning("#sigma_{q/p_{T}} [c/GeV]", 1000, 0.f, 0.1f)}, // 2024/12/12 asami  100->1000
         {"resolution_qopz",
-         plot_helpers::binning("#sigma_{q/p_{z}} [c/GeV]", 100, 0.f, 0.1f)},
+         plot_helpers::binning("#sigma_{q/p_{z}} [c/GeV]", 1000, 0.f, 0.1f)}, // 2024/12/12 asami  100->1000
         {"Eta", plot_helpers::binning("#eta", 40, -4.f, 4.f)},
         {"Pt", plot_helpers::binning("p_{T} [GeV/c]", 40, 0.f, 100.f)},
     };
